@@ -6,9 +6,9 @@ import { up, endAnimation, land, right, logoPNG, logoSVG, cityBackground } from 
 import { TimelineMax, Linear, TweenMax, Power1, Power3, Power4, Power0, Power2 } from "gsap";
 import 'scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap'
 import 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators'
-import { HorizontalSection, LoadingScreen, Welcome } from "../components";
+import { HorizontalSection, LoadingScreen, Welcome, CountDownn } from "../components";
 import * as loadingAnim from '../assets/loadingAnim.json'
-
+import moment from "moment";
 export default class Landing extends Component {
 
     constructor(props) {
@@ -20,8 +20,36 @@ export default class Landing extends Component {
             image4Loaded: false,
             image5Loaded: false,
             image6Loaded: false,
+            days:0,
+            hours:0,
+            minutes:0,
+            seconds:0
         }
     }
+    componentWillMount(){
+
+        setInterval(() => {
+            this.getDifference()
+        }, 1000);
+        
+    }
+    getDifference=()=>{
+        var now = moment(new Date()); //todays date
+        var end = moment("2018-11-9"); // another date
+        var duration = moment.duration(end.diff(now));
+        var days =  parseInt(duration.asDays()/1)>9?parseInt(duration.asDays()/1):'0'+parseInt(duration.asDays()/1);
+        var hours = parseInt(duration.asHours()%24)>9?parseInt(duration.asHours()%24):'0'+parseInt(duration.asHours()%24);
+        var minutes = parseInt(duration.asMinutes()%60)>9?parseInt(duration.asMinutes()%60):'0'+parseInt(duration.asMinutes()%60);
+        var seconds = parseInt(duration.asSeconds()%60)<=9?'0'+parseInt(duration.asSeconds()%60):parseInt(duration.asSeconds()%60);
+        console.log(days+' '+hours+' '+minutes+' '+seconds);
+        this.setState({
+            days:days,
+            hours:hours,
+            minutes:minutes,
+            seconds:seconds
+        })
+    }    
+    
     assetsAreLoaded() {
         if (
             this.state.image1Loaded &&
@@ -131,6 +159,7 @@ export default class Landing extends Component {
                 <LoadingScreen /> : <div />}
             <div id="intro-main" className='initialBackground'>
                 <img className='main-background1' src={cityBackground} onLoad={() => this.handleAssetLoad5()} />
+                <h1 style={{transform:'translate(0%, 0%)',fontSize:'4vmin'}}><code>{this.state.days+' Days  |-'}{this.state.hours+':'}{this.state.minutes+':'}{this.state.seconds+'-|'}</code></h1>
                 <img className='main-background2' src={endAnimation} onLoad={() => this.handleAssetLoad6()} />
             </div>
             <Welcome
@@ -138,7 +167,7 @@ export default class Landing extends Component {
                 tagline="North India's biggest Techno-culture fest"
                 handleOnLoadImage={() => this.handleAssetLoad1()}
                 logo={logoPNG}
-            />
+                />
 
             <div id="main" className="main-container">
 
@@ -150,21 +179,21 @@ export default class Landing extends Component {
                         paragraph='Jubin'
                         handleOnLoad={() => this.handleAssetLoad2()}
                         bottomImage={land}
-                    />
+                        />
                     <HorizontalSection
                         containerClass='section-2 section-horizontal'
                         heading='Present things'
                         paragraph='Lets go'
                         handleOnLoad={() => this.handleAssetLoad3()}
                         bottomImage={land}
-                    />
+                        />
                     <HorizontalSection
                         containerClass='section-3 section-horizontal'
                         heading='Lets move'
                         paragraph='connect to us'
                         handleOnLoad={() => this.handleAssetLoad4()}
                         bottomImage={land}
-                    />
+                        />
 
 
                 </div>
@@ -175,11 +204,12 @@ export default class Landing extends Component {
                 <div className="content">
                     <h1>Global odyssey</h1>
                     <p>Coming Soon...</p>
+                    
                 </div>
 
             </div>
             <div id="outro" className='two'>
-                {/* <img id='anim'src={anim} /> */}
+                
             </div>
 
         </div>
