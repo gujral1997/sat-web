@@ -158,8 +158,8 @@ export default class Landing extends Component {
             {!this.assetsAreLoaded() ?
                 <LoadingScreen /> : <div />}
             <div id="intro-main" className='initialBackground'>
-                <img className='main-background1' src={cityBackground} onLoad={() => this.handleAssetLoad5()} />
                 <h1 style={{transform:'translate(0%, 0%)',fontSize:'4vmin'}}><code>{this.state.days+' Days  |-'}{this.state.hours+':'}{this.state.minutes+':'}{this.state.seconds+'-|'}</code></h1>
+                <img className='main-background1' src={cityBackground} onLoad={() => this.handleAssetLoad5()} />
                 <img className='main-background2' src={endAnimation} onLoad={() => this.handleAssetLoad6()} />
             </div>
             <Welcome
