@@ -2,6 +2,7 @@
   "name": "myapp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://cloneforyou.github.io/sat-web",
   "dependencies": {
     "@tweenjs/tween.js": "github:tweenjs/tween.js",
     "autoprefixer": "7.1.6",
